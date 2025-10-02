@@ -71,7 +71,7 @@ jobs:
       - name: Wait for services
         run: |
           echo "Waiting for PostgreSQL..."
-          timeout 60 bash -c 'until pg_isready -h localhost -p 5432 -U testuser; do sleep 2; done'
+          timeout 60 bash -c 'until pg_isready -h localhost -p 5440 -U testuser; do sleep 2; done'
           echo "✅ PostgreSQL is ready!"
           
           echo "Waiting for Redis..."
@@ -82,7 +82,7 @@ jobs:
         run: |
           cd backend
           export PYTHONPATH=.
-          export DATABASE_URL="postgresql://testuser:testpass@localhost:5432/testdb"
+          export DATABASE_URL="postgresql://testuser:testpass@localhost:5440/testdb"
           export REDIS_URL="redis://localhost:6379"
           export FLASK_ENV=testing
           pytest tests/ -v --cov=. --cov-report=xml --cov-report=html --cov-report=term
